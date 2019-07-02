@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import List from './List';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { items: [{text: "Jhumur"}] };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    if (this.input.value !== "") {
+      var newItem = {
+        text: this.input.value,
+        key: Date.now()
+      };
+    }
+
+    this.setState((prevState) => {
+      return {
+        items: prevState.items.concat(newItem)
+      };
+    });
+    console.log(this.state.items);
+    this.input.value = "";
+
+    event.preventDefault();
+  }
+
+  render() {
+    const listItems = ['item1', 'item2', 'item3'];
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Name:
+            <input ref = {(a) => this.input = a}
+                   placeholder = "Enter Item" />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+        <List entries={this.state.items} />
+      </div>
+    );
+  }
 }
 
 export default App;
