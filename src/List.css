@@ -1,0 +1,13 @@
+.list-items {
+  background-color: yellow;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.list-items:hover {
+  background-color: white;
+}
+
+.status-change {
+  text-decoration: line-through;    
+}

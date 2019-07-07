@@ -4,7 +4,7 @@ import List from './List';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [{text: "Jhumur"}] };
+    this.state = { items: [{text: "Jhumur", status: 'active'}] };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -12,7 +12,8 @@ class App extends React.Component {
     if (this.input.value !== "") {
       var newItem = {
         text: this.input.value,
-        key: Date.now()
+        key: Date.now(),
+        status: 'active'
       };
     }
 
