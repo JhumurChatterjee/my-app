@@ -5,25 +5,29 @@ import './List.css'
 class List extends Component {
   constructor(props) {
     super(props);
+    this.state ={ items: props.entries }
     this.changeStatus = this.changeStatus.bind(this);
     this.createTask = this.createTask.bind(this);
   }
 
-  changeStatus(e,key) {
+  changeStatus(e) {
     e.currentTarget.style.textDecoration = 'line-through';
     this.setState((prevState) => {
-      prevState.items.find((item) => item.key == key ? item.status: 'done' : item.status: 'active')
+      console.log(prevState.items)
+      return prevState.items.find((item) => item.key == e.key ? item.status ='done' : item.status = 'active')
     });
     e.preventDefault();
   }
 
   createTask(item) {
-    return <li className="list-items" key={item.key} onClick={this.changeStatus(item.key)}>{item.text}</li>
+    if (item.status != 'done') {
+      return <li className="list-items" key={item.key} onClick={this.changeStatus}>{item.text}</li>
+    }
   }
 
   render() {
     const items = this.props.entries;
-    console.log(items[0].status);
+    console.log(items);
     const listItems = items.map(this.createTask);
     return (
       <ul className="to-do-list">

@@ -22,7 +22,6 @@ class App extends React.Component {
         items: prevState.items.concat(newItem)
       };
     });
-    console.log(this.state.items);
     this.input.value = "";
 
     event.preventDefault();
