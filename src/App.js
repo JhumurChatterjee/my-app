@@ -6,6 +6,7 @@ class App extends React.Component {
     super(props);
     this.state = { items: [{text: "Jhumur", status: 'active'}] };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.showActive = this.showActive.bind(this);
   }
 
   handleSubmit(event) {
@@ -27,8 +28,17 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  changeStatus(listItem) {
+    this.setState((prevState) => {
+      return prevState.items.map((item) => item.key == listItem ? item.status ='done' : "");
+    });
+  }
+
+  showActive() {
+    return <List entries={this.state.items} status="active" />
+  }
+
   render() {
-    const listItems = ['item1', 'item2', 'item3'];
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -39,7 +49,10 @@ class App extends React.Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <List entries={this.state.items} />
+        <button onClick={ this.showActive }>Active</button>
+        <button>Done</button>
+        <button>All</button>
+        <List entries={this.state.items} change={ this.changeStatus.bind(this)} />
       </div>
     );
   }
