@@ -9,21 +9,20 @@ class List extends Component {
     this.createTask = this.createTask.bind(this);
   }
 
-  changeStatus(e,key) {
+  changeStatus(e) {
     e.currentTarget.style.textDecoration = 'line-through';
-    this.setState((prevState) => {
-      prevState.items.find((item) => item.key == key ? item.status: 'done' : item.status: 'active')
-    });
+    this.props.change(e.currentTarget.getAttribute('data-key'));
     e.preventDefault();
   }
 
   createTask(item) {
-    return <li className="list-items" key={item.key} onClick={this.changeStatus(item.key)}>{item.text}</li>
+    if (item.status != 'done') {
+      return <li className="list-items" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
+    }
   }
 
   render() {
     const items = this.props.entries;
-    console.log(items[0].status);
     const listItems = items.map(this.createTask);
     return (
       <ul className="to-do-list">
