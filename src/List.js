@@ -16,13 +16,12 @@ class List extends Component {
   }
 
   createTask(item) {
-    if (item.status != 'done') {
-      return <li className="list-items" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
-    }
+    return <li className="list-items" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
   }
 
   render() {
     const items = this.props.entries;
+
     const listItems = items.map(this.createTask);
     return (
       <ul className="to-do-list">
