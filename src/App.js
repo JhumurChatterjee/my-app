@@ -1,12 +1,15 @@
 import React from 'react';
 import List from './List';
+import ActiveList from './ActiveList';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [{text: "Jhumur", status: 'active'}] };
+    this.state = { items: [{text: "Jhumur", status: 'active'}], showComponent: false };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.showActive = this.showActive.bind(this);
+    this._onButtonActiveClick = this._onButtonActiveClick.bind(this);
+    this._onButtonDoneClick = this._onButtonDoneClick.bind(this);
+    this._onButtonAllClick = this._onButtonAllClick.bind(this);
   }
 
   handleSubmit(event) {
@@ -34,9 +37,24 @@ class App extends React.Component {
     });
   }
 
-  showActive() {
-    return <List entries={this.state.items} status="active" />
+  _onButtonActiveClick() {
+    this.setState({
+      showComponent: 'active',
+    });
   }
+
+  _onButtonDoneClick() {
+    this.setState({
+      showComponent: 'done',
+    });
+  }
+
+  _onButtonAllClick() {
+    this.setState({
+      showComponent: 'all',
+    });
+  }
+  
 
   render() {
     return (
@@ -49,10 +67,18 @@ class App extends React.Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <button onClick={ this.showActive }>Active</button>
-        <button>Done</button>
-        <button>All</button>
-        <List entries={this.state.items} change={ this.changeStatus.bind(this)} />
+        <button onClick={this._onButtonActiveClick}>Active</button>{this.state.showComponent == 'active' ?
+           <ActiveList entries={this.state.items} status={"active"} /> :
+           null
+        }
+        <button onClick={this._onButtonDoneClick}>Done</button>{this.state.showComponent == 'done' ?
+           <ActiveList entries={this.state.items} status={"done"} /> :
+           null
+        }
+        <button onClick={this._onButtonAllClick}>ALL</button>{this.state.showComponent == 'all' ?
+           <List entries={this.state.items} change={ this.changeStatus.bind(this)}/> :
+           null
+        }
       </div>
     );
   }
