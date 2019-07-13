@@ -6,7 +6,6 @@ class List extends Component {
   constructor(props) {
     super(props);
     this.changeStatus = this.changeStatus.bind(this);
-    this.createTask = this.createTask.bind(this);
   }
 
   changeStatus(e) {
@@ -15,17 +14,32 @@ class List extends Component {
     e.preventDefault();
   }
 
-  createTask(item) {
-    return <li className="list-items" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
-  }
 
   render() {
     const items = this.props.entries;
-
-    const listItems = items.map(this.createTask);
+    const status = this.props.status;
+    const searchAction = this.props.searchAction;
     return (
       <ul className="to-do-list">
-        {listItems}
+        { items.map((item) => {
+          if(item.status == status || searchAction == "true") {
+            if (status == 'done') {
+              return <li className="list-items status-done" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
+            }
+            else {
+              return <li className="list-items" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
+            }
+          }
+
+          if (status == "all") {
+            if (item.status == 'done') {
+              return <li className="list-items status-done" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
+            }
+            else {
+              return <li className="list-items" data-key={item.key} onClick={this.changeStatus}>{item.text}</li>
+            }
+          }
+        })}
       </ul>
     );
   }
